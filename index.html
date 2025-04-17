@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        .image-container {
+            margin: 20px 0;
+        }
+        .image-container img {
+            width: fit-content;
+            max-height: 200px;
+            object-fit: contain;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .message {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #ff4757;
+            transform: scale(1.05);
+        }
+        .music-btn {
+            background: #6b8cff;
+        }
+        .music-btn:hover {
+            background: #4771ff;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>HAPPY BIRTHDAY! <br> My Sona Babu</h1>
+        
+        <div class="image-container">
+            <!-- Replace with your image paths or base64 data -->
+            <img src="D:\website\Birthday Wish\image\image_1.jpg" alt="BEAUTIFUL">
+            <img src="D:\website\Birthday Wish\image\image_2.jpg" alt="BE STRONG">
+            <img src="D:\website\Birthday Wish\image\image_3.jpg" alt="STRIVE">
+            <img src="D:\website\Birthday Wish\image\image_4.jpg" alt="STRIVE">
+        </div>
+        
+        <div class="message">
+            <p>May your day be as <strong>BEAUTIFUL</strong> as you are,</p>
+            <p>your spirit as <strong>STRONG</strong> as your will,</p>
+            <p>and your year ahead filled with <strong>STRIVING</strong> for joy!</p>
+        </div>
+        
+        <div class="btn-container">
+            <button id="celebrateBtn">Celebrate!</button>
+            <button id="musicBtn" class="music-btn">Play Music</button>
+        </div>
+    </div>
+
+    <!-- Audio element (hidden) -->
+    <audio id="birthdayAudio" loop>
+        <source src="D:\website\Birthday Wish\Music\Birthday_music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Confetti effect
+        document.getElementById('celebrateBtn').addEventListener('click', function() {
+            for (let i = 0; i < 100; i++) {
+                createConfetti();
+            }
+        });
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.opacity = '1';
+            document.body.appendChild(confetti);
+
+            const animation = confetti.animate([
+                { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+            ], {
+                duration: 1000 + Math.random() * 3000,
+                easing: 'cubic-bezier(0.1, 0.8, 0.9, 1)'
+            });
+
+            animation.onfinish = () => confetti.remove();
+        }
+
+        // Music controls
+        const audio = document.getElementById('birthdayAudio');
+        const musicBtn = document.getElementById('musicBtn');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.textContent = 'Play Music';
+            } else {
+                audio.play();
+                musicBtn.textContent = 'Pause Music';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Autoplay with user interaction (to comply with browser policies)
+        document.body.addEventListener('click', function initAudio() {
+            // This will run only once
+            audio.volume = 0.3; // Set lower volume
+            document.body.removeEventListener('click', initAudio);
+        }, { once: true });
+    </script>
+</body>
+</html>
